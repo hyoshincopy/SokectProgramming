@@ -1,38 +1,5 @@
 from socket import *
-import threading
-import time
-
-
-def send(sock):
-    while True:
-        sendData = input('>>>')
-        sock.send(sendData.encode('utf-8'))
-
-
-def receive(sock):
-    while True:
-        recvData = sock.recv(1024)
-        print('상대방 :', recvData.decode('utf-8'))
-
-
-port = 8081
-
-serverSock = socket(AF_INET, SOCK_STREAM)
-serverSock.bind(('', port))
-serverSock.listen(1)
-
-print('%d번 포트로 접속 대기중...' % port)
-
-connectionSock, addr = serverSock.accept()
-
-print(str(addr), '에서 접속되었습니다.')
-
-sender = threading.Thread(target=send, args=(connectionSock,))
-receiver = threading.Thread(target=receive, args=(connectionSock,))
-
-sender.start()
-receiver.start()
-
-while True:
-    time.sleep(1)
-    pass
+serverSock = socket(AF_INET, SOCK_STREAM)  # ? (1)소켓 생성
+serverSock.bind(('', 8080))  # ? bind => (ip,port)인 튜플을 address family에 연결
+serverSock.listen(1)  # ? 상대방의 접속을 기다림 => listen 의 매개변수는 동시접속 개수
+clientSock, addr = serverSock.accept()
