@@ -26,7 +26,7 @@ print('%d번 포트로 접속 대기중...' % port)
 connectionSock, addr = serverSock.accept()
 
 print(str(addr), '에서 접속되었습니다.')
-
+print("sdfsdf")
 sender = threading.Thread(target=send, args=(connectionSock,))
 receiver = threading.Thread(target=receive, args=(connectionSock,))
 
